@@ -14,7 +14,14 @@ function App() {
   }, []);
 
   function createTodo() {
-    client.models.Todo.create({ content: window.prompt("Todo content") });
+    var v1 = window.prompt("Todo content");
+    var v2 = window.prompt("Todo editor");
+    client.models.Todo.create({ content: v1+" " +v2 });
+  }
+
+    
+  function deleteTodo(id: string) {
+    client.models.Todo.delete({ id })
   }
 
   return (
@@ -23,7 +30,9 @@ function App() {
       <button onClick={createTodo}>+ new</button>
       <ul>
         {todos.map((todo) => (
-          <li key={todo.id}>{todo.content}</li>
+          <li 
+          onClick={() => deleteTodo(todo.id)}
+          key={todo.id}>{todo.content + " " + todo.editor}</li>
         ))}
       </ul>
       <div>
